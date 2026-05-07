@@ -8,46 +8,20 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(compression());
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const pgSession = require('connect-pg-simple')(session);
-const { Pool } = require('pg');
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
-});
-
-pool.query(`
-  CREATE TABLE IF NOT EXISTS "session" (
-    "sid" varchar NOT NULL,
-    "sess" json NOT NULL,
-    "expire" timestamp(6) NOT NULL,
-    PRIMARY KEY ("sid")
-  )
-`).then(() => pool.query('CREATE INDEX IF NOT EXISTS session_expire_idx ON "session" ("expire")'
-)).then(() => console.log('Session table ready!')
-).catch(err => console.error('Table error:', err));
-
+app.use('/assets', express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname)));
 app.use(session({
-  store: new pgSession({
-    pool: pool,
-    tableName: 'session'
-  }),
   secret: process.env.SESSION_SECRET || 'refurbx-secret-2026',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
 }));
-app.use(express.static(path.join(__dirname)));
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
-app.use(express.static(path.join(__dirname, 'assets')));
 
-// ─── PRODUCT DATABASE ───────────────────────────────────────────────────────
 const products = [
   { id: 1, name: 'iPhone 15 Pro', brand: 'Apple', category: 'smartphone', storage: '256GB', ram: '8GB', battery: 95, grade: 'A+', condition: 'Excellent', price: 98900, mrp: 134900, color: 'Natural Titanium', image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&q=80', warranty: '12 months', rating: 4.9, reviews: 312 },
   { id: 2, name: 'iPhone 14 Pro Max', brand: 'Apple', category: 'smartphone', storage: '256GB', ram: '6GB', battery: 92, grade: 'A+', condition: 'Excellent', price: 84999, mrp: 119900, color: 'Deep Purple', image: 'https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=600&q=80', warranty: '12 months', rating: 4.8, reviews: 487 },
@@ -58,12 +32,11 @@ const products = [
   { id: 7, name: 'MacBook Air M2', brand: 'Apple', category: 'laptop', storage: '512GB', ram: '16GB', battery: 93, grade: 'A+', condition: 'Excellent', price: 72499, mrp: 119900, color: 'Midnight Navy', image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600&q=80', warranty: '12 months', rating: 4.9, reviews: 298 },
   { id: 8, name: 'MacBook Pro 14 M3', brand: 'Apple', category: 'laptop', storage: '1TB', ram: '18GB', battery: 95, grade: 'A+', condition: 'Excellent', price: 134999, mrp: 189900, color: 'Space Black', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&q=80', warranty: '12 months', rating: 4.9, reviews: 156 },
   { id: 9, name: 'Dell XPS 15', brand: 'Dell', category: 'laptop', storage: '512GB', ram: '32GB', battery: 88, grade: 'A', condition: 'Excellent', price: 89999, mrp: 149999, color: 'Platinum Silver', image: 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&q=80', warranty: '12 months', rating: 4.7, reviews: 201 },
-  { id: 10, name: 'Precision Book G5', brand: 'HP', category: 'laptop', storage: '1TB', ram: '32GB', battery: 86, grade: 'A', condition: 'Good', price: 112000, mrp: 159999, color: 'Matte Black', image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&q=80', warranty: '12 months', rating: 4.6, reviews: 87 },
-  { id: 11, name: 'Lenovo ThinkPad X1', brand: 'Lenovo', category: 'laptop', storage: '512GB', ram: '16GB', battery: 91, grade: 'A+', condition: 'Excellent', price: 67999, mrp: 119999, color: 'Carbon Black', image: 'https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600&q=80', warranty: '12 months', rating: 4.8, reviews: 134 },
+  { id: 10, name: 'Lenovo ThinkPad X1', brand: 'Lenovo', category: 'laptop', storage: '512GB', ram: '16GB', battery: 91, grade: 'A+', condition: 'Excellent', price: 67999, mrp: 119999, color: 'Carbon Black', image: 'https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600&q=80', warranty: '12 months', rating: 4.8, reviews: 134 },
+  { id: 11, name: 'HP Precision Book G5', brand: 'HP', category: 'laptop', storage: '1TB', ram: '32GB', battery: 86, grade: 'A', condition: 'Good', price: 112000, mrp: 159999, color: 'Matte Black', image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&q=80', warranty: '12 months', rating: 4.6, reviews: 87 },
   { id: 12, name: 'ASUS ROG Zephyrus', brand: 'ASUS', category: 'laptop', storage: '1TB', ram: '32GB', battery: 85, grade: 'A', condition: 'Good', price: 98999, mrp: 159999, color: 'Moonlight White', image: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&q=80', warranty: '12 months', rating: 4.7, reviews: 167 },
 ];
 
-// ─── QUOTE ENGINE ────────────────────────────────────────────────────────────
 const quoteMultipliers = {
   condition: { Excellent: 0.65, Good: 0.50, Fair: 0.35, Cracked: 0.15 },
   battery: (b) => b >= 90 ? 1.0 : b >= 80 ? 0.9 : b >= 70 ? 0.75 : 0.5,
@@ -78,15 +51,11 @@ const basePrices = {
   'Dell XPS 15': 80000, 'Lenovo ThinkPad X1': 70000,
 };
 
-// ─── ORDERS DATABASE (in-memory) ─────────────────────────────────────────────
 const orders = [
   { id: 'RX-90124', productName: 'iPhone 14 Pro Max', status: 'Out for Delivery', stage: 4, eta: '2026-05-08', price: 84999 },
   { id: 'RX-88420', productName: 'MacBook Air M2', status: 'Quality Control', stage: 3, eta: '2026-05-10', price: 72499 },
 ];
 
-// ─── API ROUTES ───────────────────────────────────────────────────────────────
-
-// GET all products with filters
 app.get('/api/products', (req, res) => {
   let results = [...products];
   const { category, brand, condition, storage, minPrice, maxPrice, sort } = req.query;
@@ -102,14 +71,12 @@ app.get('/api/products', (req, res) => {
   res.json({ products: results, total: results.length });
 });
 
-// GET single product
 app.get('/api/products/:id', (req, res) => {
   const product = products.find(p => p.id === parseInt(req.params.id));
   if (!product) return res.status(404).json({ error: 'Product not found' });
   res.json(product);
 });
 
-// GET cart
 app.get('/api/cart', (req, res) => {
   if (!req.session.cart) req.session.cart = [];
   const cart = req.session.cart.map(item => {
@@ -120,7 +87,6 @@ app.get('/api/cart', (req, res) => {
   res.json({ cart, total, count: cart.reduce((s, i) => s + i.qty, 0) });
 });
 
-// ADD to cart
 app.post('/api/cart', (req, res) => {
   if (!req.session.cart) req.session.cart = [];
   const { productId, qty = 1 } = req.body;
@@ -130,7 +96,6 @@ app.post('/api/cart', (req, res) => {
   res.json({ success: true, cartCount: req.session.cart.reduce((s, i) => s + i.qty, 0) });
 });
 
-// UPDATE cart item
 app.put('/api/cart/:productId', (req, res) => {
   if (!req.session.cart) req.session.cart = [];
   const id = parseInt(req.params.productId);
@@ -140,14 +105,12 @@ app.put('/api/cart/:productId', (req, res) => {
   res.json({ success: true });
 });
 
-// REMOVE from cart
 app.delete('/api/cart/:productId', (req, res) => {
   if (!req.session.cart) req.session.cart = [];
   req.session.cart = req.session.cart.filter(i => i.productId !== parseInt(req.params.productId));
   res.json({ success: true });
 });
 
-// POST quote calculation
 app.post('/api/quote', (req, res) => {
   const { deviceName, condition, batteryHealth, accessories = [] } = req.body;
   const base = basePrices[deviceName] || 30000;
@@ -156,31 +119,27 @@ app.post('/api/quote', (req, res) => {
   let accBonus = accessories.reduce((s, a) => s + (quoteMultipliers.accessories[a] || 0), 0);
   const quote = Math.round(base * condMult * batMult * (1 + accBonus));
   const range = { min: Math.round(quote * 0.95), max: Math.round(quote * 1.05) };
-  setTimeout(() => res.json({ quote, range, deviceName, condition, batteryHealth, processingTime: '24-48 hours', paymentMethod: 'UPI/Bank Transfer' }), 1200);
+  setTimeout(() => res.json({ quote, range, deviceName, condition, batteryHealth }), 1200);
 });
 
-// POST place order
 app.post('/api/orders', (req, res) => {
-  const { shipping, payment, promoCode } = req.body;
   if (!req.session.cart || req.session.cart.length === 0) {
     return res.status(400).json({ error: 'Cart is empty' });
   }
   const orderId = 'RX-' + Math.floor(Math.random() * 90000 + 10000);
   const eta = new Date(); eta.setDate(eta.getDate() + 3);
-  const order = { id: orderId, items: req.session.cart, shipping, status: 'Order Placed', stage: 1, eta: eta.toISOString().split('T')[0], createdAt: new Date().toISOString() };
+  const order = { id: orderId, items: req.session.cart, status: 'Order Placed', stage: 1, eta: eta.toISOString().split('T')[0] };
   orders.push(order);
   req.session.cart = [];
   res.json({ success: true, orderId, eta: order.eta });
 });
 
-// GET order tracking
 app.get('/api/orders/:id', (req, res) => {
   const order = orders.find(o => o.id === req.params.id);
   if (!order) return res.status(404).json({ error: 'Order not found' });
   res.json(order);
 });
 
-// GET search
 app.get('/api/search', (req, res) => {
   const q = (req.query.q || '').toLowerCase();
   const results = products.filter(p =>
@@ -191,12 +150,10 @@ app.get('/api/search', (req, res) => {
   res.json({ results });
 });
 
-// Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok', brand: 'RefurbX', version: '1.0.0' }));
 
-// Serve HTML pages
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-['smartphones', 'laptops', 'product', 'cart', 'checkout', 'sell', 'quote', 'account', 'track', 'process', 'support'].forEach(page => {
+['smartphones', 'laptops', 'product', 'cart', 'checkout', 'sell', 'quote', 'track', 'account', 'process', 'support'].forEach(page => {
   app.get(`/${page}`, (req, res) => res.sendFile(path.join(__dirname, `${page}.html`)));
   app.get(`/${page}.html`, (req, res) => res.sendFile(path.join(__dirname, `${page}.html`)));
 });
