@@ -20,7 +20,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
 }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname)));
 
 // ─── PRODUCT DATABASE ───────────────────────────────────────────────────────
 const products = [
@@ -170,10 +170,10 @@ app.get('/api/search', (req, res) => {
 app.get('/api/health', (req, res) => res.json({ status: 'ok', brand: 'RefurbX', version: '1.0.0' }));
 
 // Serve HTML pages
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 ['smartphones', 'laptops', 'product', 'cart', 'checkout', 'sell', 'quote', 'account', 'track', 'process', 'support'].forEach(page => {
-  app.get(`/${page}`, (req, res) => res.sendFile(path.join(__dirname, 'public', `${page}.html`)));
-  app.get(`/${page}.html`, (req, res) => res.sendFile(path.join(__dirname, 'public', `${page}.html`)));
+  app.get(`/${page}`, (req, res) => res.sendFile(path.join(__dirname, `${page}.html`)));
+  app.get(`/${page}.html`, (req, res) => res.sendFile(path.join(__dirname, `${page}.html`)));
 });
 
 app.listen(PORT, () => console.log(`\n🚀 RefurbX server running at http://localhost:${PORT}\n`));
