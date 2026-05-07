@@ -14,8 +14,20 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const pgSession = require('connect-pg-simple')(session);
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
+
 app.use(session({
-  secret: 'refurbx-secret-2026',
+  store: new pgSession({
+    pool: pool,
+    tableName: 'session'
+  }),
+  secret: process.env.SESSION_SECRET || 'refurbx-secret-2026',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
