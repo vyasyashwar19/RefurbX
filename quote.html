@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Get Your Quote — RefurbX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{'surface':'#121414','surface-container-lowest':'#0c0f0f','surface-container-low':'#1a1c1c','surface-container':'#1e2020','surface-container-high':'#282a2b','surface-container-highest':'#333535','on-surface':'#e2e2e2','on-surface-variant':'#b9cacb','outline':'#849495','outline-variant':'#3b494b','primary-fixed-dim':'#00dbe9','on-primary-fixed':'#002022','background':'#121414'},fontFamily:{'grotesk':['Space Grotesk','sans-serif'],'work':['Work Sans','sans-serif']}}}}</script>
+<link rel="stylesheet" href="/assets/base.css"/>
+<style>
+.cond-card{border:1px solid #3b494b;background:#1e2020;padding:1.5rem;cursor:pointer;transition:all .2s}
+.cond-card:hover{border-color:rgba(0,219,233,.4);background:#282a2b}
+.cond-card.selected{border-color:#00dbe9;background:rgba(0,219,233,.06)}
+.step-panel{display:none}.step-panel.active{display:block}
+.bat-range{-webkit-appearance:none;appearance:none;height:2px;outline:none;cursor:pointer;background:linear-gradient(to right,#00dbe9 var(--v,85%),#3b494b var(--v,85%))}
+.bat-range::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#00dbe9;cursor:pointer;box-shadow:0 0 10px rgba(0,219,233,.5)}
+.acc-check{display:none}
+.acc-label{border:1px solid #3b494b;padding:.75rem 1.25rem;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:12px;display:flex;align-items:center;gap:.5rem;transition:all .2s;text-transform:uppercase;letter-spacing:.04em;color:#b9cacb}
+.acc-label:hover{border-color:rgba(0,219,233,.4);color:#00dbe9}
+.acc-check:checked + .acc-label{border-color:#00dbe9;color:#00dbe9;background:rgba(0,219,233,.06)}
+@keyframes countUp{from{opacity:0;transform:scale(0.7)}to{opacity:1;transform:scale(1)}}
+.quote-reveal{animation:countUp 0.6s cubic-bezier(.34,1.56,.64,1) forwards}
+</style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<main class="max-w-4xl mx-auto px-6 py-12">
+  <div class="text-center mb-12">
+    <span class="font-grotesk text-xs text-primary-fixed-dim tracking-[.3em] uppercase block mb-3">AI-Powered Valuation</span>
+    <h1 class="font-grotesk font-bold text-4xl text-on-surface">Get Your Instant Quote</h1>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="mb-10">
+    <div class="flex justify-between items-center mb-3">
+      <span class="font-grotesk text-xs text-primary-fixed-dim" id="step-label">Step 1 of 4</span>
+      <span class="font-grotesk text-xs text-on-surface-variant" id="step-pct">25%</span>
+    </div>
+    <div class="h-1 bg-surface-container-highest rounded-full overflow-hidden">
+      <div id="progress-bar" class="h-full bg-primary-fixed-dim transition-all duration-500" style="width:25%;box-shadow:0 0 10px rgba(0,219,233,.8)"></div>
+    </div>
+    <div class="flex justify-between mt-3">
+      <span class="font-grotesk text-xs text-on-surface-variant">Select Device</span>
+      <span class="font-grotesk text-xs text-on-surface-variant">Condition</span>
+      <span class="font-grotesk text-xs text-on-surface-variant">Battery</span>
+      <span class="font-grotesk text-xs text-on-surface-variant">Your Quote</span>
+    </div>
+  </div>
+
+  <!-- Step 1: Device Selection -->
+  <div class="step-panel active" id="step-1">
+    <div class="bg-surface-container-low border border-outline-variant/30 p-8 cyan-glow">
+      <h2 class="font-grotesk font-semibold text-xl text-on-surface mb-6">Which device are you selling?</h2>
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest block mb-2">Category</label>
+          <select id="q-category" class="w-full bg-surface-container border border-outline-variant text-on-surface font-work text-sm px-4 py-3 focus:border-primary-fixed-dim transition-colors">
+            <option value="">Select category</option>
+            <option value="smartphone">Smartphone</option>
+            <option value="laptop">Laptop</option>
+          </select>
+        </div>
+        <div>
+          <label class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest block mb-2">Brand</label>
+          <select id="q-brand" class="w-full bg-surface-container border border-outline-variant text-on-surface font-work text-sm px-4 py-3 focus:border-primary-fixed-dim transition-colors">
+            <option value="">Select brand</option>
+            <option>Apple</option><option>Samsung</option><option>Google</option><option>OnePlus</option><option>Dell</option><option>HP</option><option>Lenovo</option><option>ASUS</option>
+          </select>
+        </div>
+        <div class="md:col-span-2">
+          <label class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest block mb-2">Device Model</label>
+          <select id="q-model" class="w-full bg-surface-container border border-outline-variant text-on-surface font-work text-sm px-4 py-3 focus:border-primary-fixed-dim transition-colors">
+            <option value="">Select model</option>
+            <option>iPhone 15 Pro</option><option>iPhone 14 Pro Max</option><option>iPhone 13 Pro</option>
+            <option>Samsung Galaxy S24 Ultra</option><option>Samsung Galaxy S23</option>
+            <option>Google Pixel 8 Pro</option><option>OnePlus 12</option>
+            <option>MacBook Air M2</option><option>MacBook Pro 14</option>
+            <option>Dell XPS 15</option><option>Lenovo ThinkPad X1</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="nextStep(1)">Next: Condition <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+    </div>
+  </div>
+
+  <!-- Step 2: Condition -->
+  <div class="step-panel" id="step-2">
+    <div class="bg-surface-container-low border border-outline-variant/30 p-8 cyan-glow">
+      <h2 class="font-grotesk font-semibold text-xl text-on-surface mb-6">What's the overall condition?</h2>
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div class="cond-card" data-cond="Excellent" onclick="selectCond(this)">
+          <div class="flex justify-between items-start mb-2">
+            <span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings:'FILL' 1">workspace_premium</span>
+            <div class="w-5 h-5 rounded-full border-2 border-primary-fixed-dim flex items-center justify-center cond-radio"><div class="w-2.5 h-2.5 bg-primary-fixed-dim rounded-full hidden cond-dot"></div></div>
+          </div>
+          <h3 class="font-grotesk font-semibold text-on-surface mb-1">Excellent</h3>
+          <p class="font-work text-sm text-on-surface-variant">No scratches or dents. Factory-new appearance. Screen is flawless.</p>
+        </div>
+        <div class="cond-card" data-cond="Good" onclick="selectCond(this)">
+          <div class="flex justify-between items-start mb-2">
+            <span class="material-symbols-outlined text-on-surface-variant">verified_user</span>
+            <div class="w-5 h-5 rounded-full border-2 border-outline-variant cond-radio"><div class="w-2.5 h-2.5 bg-primary-fixed-dim rounded-full hidden cond-dot"></div></div>
+          </div>
+          <h3 class="font-grotesk font-semibold text-on-surface mb-1">Good</h3>
+          <p class="font-work text-sm text-on-surface-variant">Minor signs of use. Light scratches visible only under strong light.</p>
+        </div>
+        <div class="cond-card" data-cond="Fair" onclick="selectCond(this)">
+          <div class="flex justify-between items-start mb-2">
+            <span class="material-symbols-outlined text-on-surface-variant">build</span>
+            <div class="w-5 h-5 rounded-full border-2 border-outline-variant cond-radio"><div class="w-2.5 h-2.5 bg-primary-fixed-dim rounded-full hidden cond-dot"></div></div>
+          </div>
+          <h3 class="font-grotesk font-semibold text-on-surface mb-1">Fair</h3>
+          <p class="font-work text-sm text-on-surface-variant">Visible scratches or minor dents. Screen is intact and functional.</p>
+        </div>
+        <div class="cond-card" data-cond="Cracked" onclick="selectCond(this)">
+          <div class="flex justify-between items-start mb-2">
+            <span class="material-symbols-outlined text-on-surface-variant">heart_broken</span>
+            <div class="w-5 h-5 rounded-full border-2 border-outline-variant cond-radio"><div class="w-2.5 h-2.5 bg-primary-fixed-dim rounded-full hidden cond-dot"></div></div>
+          </div>
+          <h3 class="font-grotesk font-semibold text-on-surface mb-1">Damaged</h3>
+          <p class="font-work text-sm text-on-surface-variant">Cracked glass, damaged pixels, or significant structural damage.</p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <button class="btn-ghost" onclick="prevStep(2)"><span class="material-symbols-outlined text-sm">arrow_back</span> Back</button>
+        <button class="btn-primary" onclick="nextStep(2)">Next: Battery <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Battery & Accessories -->
+  <div class="step-panel" id="step-3">
+    <div class="bg-surface-container-low border border-outline-variant/30 p-8 cyan-glow">
+      <h2 class="font-grotesk font-semibold text-xl text-on-surface mb-8">Battery health & accessories</h2>
+      <div class="mb-8">
+        <label class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest block mb-4">Battery Maximum Capacity</label>
+        <div class="flex items-center gap-6">
+          <input type="range" id="q-battery" min="50" max="100" value="85" class="bat-range w-full"
+            oninput="const v=this.value;document.getElementById('bat-label').textContent=v+'%';const pct=(v-50)/50*100+'%';this.style.setProperty('--v',pct)"/>
+          <span class="font-grotesk font-bold text-2xl text-primary-fixed-dim min-w-[70px] text-right" id="bat-label">85%</span>
+        </div>
+        <div class="flex justify-between mt-2 font-grotesk text-xs text-on-surface-variant">
+          <span>50% (Poor)</span><span>75% (Fair)</span><span>90%+ (Excellent)</span>
+        </div>
+      </div>
+      <div>
+        <label class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest block mb-4">Accessories Included</label>
+        <div class="flex flex-wrap gap-3">
+          <input type="checkbox" id="acc-box" class="acc-check" value="original_box"/>
+          <label for="acc-box" class="acc-label"><span class="material-symbols-outlined text-sm">inventory_2</span> Original Box</label>
+          <input type="checkbox" id="acc-charger" class="acc-check" value="charger"/>
+          <label for="acc-charger" class="acc-label"><span class="material-symbols-outlined text-sm">cable</span> Charger</label>
+          <input type="checkbox" id="acc-ear" class="acc-check" value="earphones"/>
+          <label for="acc-ear" class="acc-label"><span class="material-symbols-outlined text-sm">headphones</span> Earphones</label>
+        </div>
+      </div>
+      <div class="flex gap-4 mt-8">
+        <button class="btn-ghost" onclick="prevStep(3)"><span class="material-symbols-outlined text-sm">arrow_back</span> Back</button>
+        <button class="btn-primary" onclick="calculateQuote()">Calculate Quote <span class="material-symbols-outlined text-sm">auto_awesome</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Quote Result -->
+  <div class="step-panel" id="step-4">
+    <div class="bg-surface-container-low border border-primary-fixed-dim/30 p-10 text-center" style="box-shadow:0 0 60px rgba(0,219,233,0.08)">
+      <span class="material-symbols-outlined text-primary-fixed-dim text-5xl block mb-4" style="font-variation-settings:'FILL' 1">auto_awesome</span>
+      <p class="font-grotesk text-xs text-primary-fixed-dim uppercase tracking-widest mb-3">Your Estimated Quote</p>
+      <div class="quote-reveal mb-2">
+        <span class="font-grotesk font-bold text-6xl text-on-surface" id="quote-amount">—</span>
+      </div>
+      <p class="font-work text-sm text-on-surface-variant mb-2">Range: <span class="text-primary-fixed-dim font-grotesk" id="quote-range">—</span></p>
+      <p class="font-work text-xs text-on-surface-variant mb-8">Final amount confirmed after physical inspection. Typically within 2% of estimate.</p>
+      <div id="quote-details" class="flex flex-wrap justify-center gap-3 mb-8"></div>
+      <div class="bg-surface-container border border-outline-variant/30 p-4 mb-8 text-left">
+        <div class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-primary-fixed-dim text-sm mt-0.5">info</span>
+          <p class="font-work text-xs text-on-surface-variant">This quote is valid for 7 days. Payment is made within 24 hours of receiving and inspecting your device.</p>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button class="btn-primary text-sm px-10" onclick="acceptQuote()"><span class="material-symbols-outlined text-sm">check</span> Accept & Schedule Pickup</button>
+        <button class="btn-ghost text-sm" onclick="resetQuote()">Start Over</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="footer-placeholder"></div>
+<script src="/assets/shared.js"></script>
+<script src="/assets/app.js"></script>
+<script>
+injectShared('/sell');
+let currentStep = 1;
+let selectedCond = '';
+const steps = ['Select Device','Condition','Battery','Your Quote'];
+const pcts = [25, 50, 75, 100];
+
+function setStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+  document.getElementById('step-label').textContent = `Step ${n} of 4: ${steps[n-1]}`;
+  document.getElementById('step-pct').textContent = pcts[n-1] + '%';
+  document.getElementById('progress-bar').style.width = pcts[n-1] + '%';
+  currentStep = n;
+}
+
+function nextStep(from) {
+  if (from === 1) {
+    if (!document.getElementById('q-model').value) { RefurbX.showToast('Please select a device model', 'error'); return; }
+  }
+  if (from === 2) {
+    if (!selectedCond) { RefurbX.showToast('Please select a condition', 'error'); return; }
+  }
+  setStep(from + 1);
+}
+function prevStep(from) { setStep(from - 1); }
+
+function selectCond(el) {
+  document.querySelectorAll('.cond-card').forEach(c => {
+    c.classList.remove('selected');
+    c.querySelector('.cond-dot').classList.add('hidden');
+  });
+  el.classList.add('selected');
+  el.querySelector('.cond-dot').classList.remove('hidden');
+  selectedCond = el.dataset.cond;
+}
+
+async function calculateQuote() {
+  const model = document.getElementById('q-model').value;
+  const battery = document.getElementById('q-battery').value;
+  const accessories = [...document.querySelectorAll('.acc-check:checked')].map(c => c.value);
+  if (!selectedCond) { RefurbX.showToast('Please select a condition first', 'error'); return; }
+  const btn = document.querySelector('#step-3 .btn-primary');
+  btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">sync</span> Calculating...';
+  setStep(4);
+  document.getElementById('quote-amount').textContent = '...';
+  try {
+    const res = await RefurbX.api.post('/quote', { deviceName: model, condition: selectedCond, batteryHealth: battery, accessories });
+    document.getElementById('quote-amount').textContent = RefurbX.formatPrice(res.quote);
+    document.getElementById('quote-range').textContent = `${RefurbX.formatPrice(res.range.min)} – ${RefurbX.formatPrice(res.range.max)}`;
+    document.getElementById('quote-details').innerHTML = [
+      ['devices', model], ['battery_charging_90', battery + '% Battery'], ['star', selectedCond]
+    ].map(([icon, label]) => `<span class="chip flex items-center gap-1"><span class="material-symbols-outlined text-xs">${icon}</span>${label}</span>`).join('');
+  } catch(e) { document.getElementById('quote-amount').textContent = 'Error'; }
+  btn.disabled = false; btn.innerHTML = 'Calculate Quote <span class="material-symbols-outlined text-sm">auto_awesome</span>';
+}
+
+function acceptQuote() { RefurbX.showToast('Quote accepted! A specialist will contact you within 2 hours.', 'success'); }
+function resetQuote() { selectedCond=''; setStep(1); }
+</script>
+</body></html>

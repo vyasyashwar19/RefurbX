@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shop Laptops — RefurbX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{'surface':'#121414','surface-container-lowest':'#0c0f0f','surface-container-low':'#1a1c1c','surface-container':'#1e2020','surface-container-high':'#282a2b','surface-container-highest':'#333535','on-surface':'#e2e2e2','on-surface-variant':'#b9cacb','outline':'#849495','outline-variant':'#3b494b','primary-fixed-dim':'#00dbe9','on-primary-fixed':'#002022','background':'#121414','error-container':'#93000a','on-error-container':'#ffdad6'},fontFamily:{'grotesk':['Space Grotesk','sans-serif'],'work':['Work Sans','sans-serif']}}}}</script>
+<link rel="stylesheet" href="/assets/base.css"/>
+<style>
+.filter-chip{border:1px solid #3b494b;color:#b9cacb;font-family:'Space Grotesk',sans-serif;font-size:11px;padding:5px 14px;cursor:pointer;transition:all .2s;background:transparent;letter-spacing:.04em;text-transform:uppercase}
+.filter-chip.active,.filter-chip:hover{border-color:#00dbe9;color:#00dbe9;background:rgba(0,219,233,.08)}
+.range-track{-webkit-appearance:none;appearance:none;height:2px;background:linear-gradient(to right,#00dbe9 var(--val,60%),#3b494b var(--val,60%));outline:none;cursor:pointer}
+.range-track::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#00dbe9;cursor:pointer;box-shadow:0 0 8px rgba(0,219,233,.5)}
+</style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<main class="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+  <!-- Header -->
+  <header class="mb-10 border-l-4 border-primary-fixed-dim pl-6">
+    <span class="font-grotesk text-xs text-primary-fixed-dim tracking-[.3em] uppercase block mb-2">Precision Catalog</span>
+    <h1 class="font-grotesk font-bold text-4xl text-on-surface mb-2">Laptops</h1>
+    <p class="font-work text-on-surface-variant max-w-xl">Premium-grade laptops rebuilt to factory spec. Every unit tested across 40+ engineering benchmarks.</p>
+  </header>
+
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- Sidebar Filters -->
+    <aside class="w-full lg:w-64 shrink-0 space-y-8">
+      <div class="bg-surface-container-low border border-outline-variant/30 p-6">
+        <h3 class="font-grotesk font-semibold text-on-surface mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary-fixed-dim text-lg">filter_list</span> Filters
+        </h3>
+        <!-- Brand -->
+        <div class="mb-6">
+          <p class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-3">Brand</p>
+          <div class="space-y-2" id="brand-filters">
+            <label class="flex items-center gap-3 cursor-pointer group">
+              <input type="checkbox" value="Apple" class="brand-filter accent-primary-fixed-dim bg-surface-container border-outline-variant rounded"/>
+              <span class="font-work text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Apple</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer group">
+              <input type="checkbox" value="Samsung" class="brand-filter accent-primary-fixed-dim bg-surface-container border-outline-variant rounded"/>
+              <span class="font-work text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Samsung</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer group">
+              <input type="checkbox" value="Google" class="brand-filter accent-primary-fixed-dim bg-surface-container border-outline-variant rounded"/>
+              <span class="font-work text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Google Pixel</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer group">
+              <input type="checkbox" value="OnePlus" class="brand-filter accent-primary-fixed-dim bg-surface-container border-outline-variant rounded"/>
+              <span class="font-work text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">OnePlus</span>
+            </label>
+          </div>
+        </div>
+        <!-- Condition -->
+        <div class="mb-6">
+          <p class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-3">Condition</p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-3 cursor-pointer group">
+              <input type="checkbox" value="Excellent" class="cond-filter accent-primary-fixed-dim rounded"/>
+              <span class="font-work text-sm text-on-surface-variant group-hover:text-on-surface">Excellent (Grade A+)</span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer group">
+              <input type="checkbox" value="Good" class="cond-filter accent-primary-fixed-dim rounded"/>
+              <span class="font-work text-sm text-on-surface-variant group-hover:text-on-surface">Good (Grade A)</span>
+            </label>
+          </div>
+        </div>
+        <!-- Storage -->
+        <div class="mb-6">
+          <p class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-3">Storage</p>
+          <div class="flex flex-wrap gap-2">
+            <button class="filter-chip storage-filter" data-value="128GB">128GB</button>
+            <button class="filter-chip storage-filter" data-value="256GB">256GB</button>
+            <button class="filter-chip storage-filter" data-value="512GB">512GB</button>
+          </div>
+        </div>
+        <!-- Price Range -->
+        <div>
+          <p class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-3">Max Price</p>
+          <input type="range" id="price-range" min="20000" max="150000" value="150000" step="5000" class="range-track w-full mb-2"/>
+          <div class="flex justify-between">
+            <span class="font-grotesk text-xs text-on-surface-variant">₹20,000</span>
+            <span class="font-grotesk text-xs text-primary-fixed-dim" id="price-label">₹1,50,000</span>
+          </div>
+        </div>
+        <button id="clear-filters" class="mt-6 w-full border border-outline-variant text-on-surface-variant font-grotesk text-xs uppercase tracking-widest py-2 hover:border-primary-fixed-dim hover:text-primary-fixed-dim transition-all">Clear Filters</button>
+      </div>
+    </aside>
+
+    <!-- Products Grid -->
+    <div class="flex-1">
+      <!-- Sort Bar -->
+      <div class="flex items-center justify-between mb-6">
+        <span class="font-grotesk text-sm text-on-surface-variant" id="results-count">Loading...</span>
+        <select id="sort-select" class="bg-surface-container border border-outline-variant text-on-surface-variant font-grotesk text-xs px-3 py-2 focus:border-primary-fixed-dim">
+          <option value="rating">Top Rated</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+        </select>
+      </div>
+      <div id="products-grid" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div class="col-span-3 text-center py-20">
+          <span class="material-symbols-outlined text-5xl text-primary-fixed-dim animate-spin block mb-4">sync</span>
+          <p class="font-grotesk text-on-surface-variant">Loading products...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="footer-placeholder"></div>
+<script src="/assets/shared.js"></script>
+<script src="/assets/app.js"></script>
+<script>
+injectShared("/laptops");
+
+let allProducts = [];
+let activeFilters = { brands: [], conditions: [], storage: null, maxPrice: 150000, sort: 'rating' };
+
+function renderProducts(products) {
+  const grid = document.getElementById('products-grid');
+  document.getElementById('results-count').textContent = `${products.length} devices found`;
+  if (!products.length) {
+    grid.innerHTML = `<div class="col-span-3 text-center py-20"><span class="material-symbols-outlined text-5xl text-on-surface-variant block mb-4">search_off</span><p class="font-grotesk text-on-surface-variant">No devices match your filters</p></div>`;
+    return;
+  }
+  grid.innerHTML = products.map(p => `
+    <div class="product-card bg-surface-container technical-border cursor-pointer" onclick="window.location='/product?id=${p.id}'">
+      <div class="aspect-square bg-surface-container-high/30 p-6 overflow-hidden flex items-center justify-center relative">
+        <span class="absolute top-3 left-3 chip">Grade ${p.grade}</span>
+        <img src="${p.image}" alt="${p.name}" class="product-img w-full h-full object-contain"/>
+      </div>
+      <div class="p-5">
+        <div class="flex gap-2 mb-3 flex-wrap">
+          <span class="chip">${p.storage}</span>
+          <span class="chip">${p.battery}% Battery</span>
+          <span class="chip">${p.ram}</span>
+        </div>
+        <h4 class="font-grotesk font-semibold text-lg text-on-surface mb-1">${p.name}</h4>
+        <p class="font-work text-sm text-on-surface-variant mb-4">${p.color}</p>
+        <div class="flex justify-between items-end">
+          <div>
+            <div class="font-grotesk font-bold text-2xl text-on-surface">${RefurbX.formatPrice(p.price)}</div>
+            <div class="font-work text-xs text-on-surface-variant line-through">${RefurbX.formatPrice(p.mrp)}</div>
+          </div>
+          <button data-add-cart="${p.id}" onclick="event.stopPropagation();RefurbX.addToCart(${p.id})" class="w-10 h-10 flex items-center justify-center bg-primary-fixed-dim text-on-primary-fixed hover:brightness-110 transition-all active:scale-90">
+            <span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+          </button>
+        </div>
+        <div class="mt-3 pt-3 border-t border-outline-variant/20 flex items-center justify-between">
+          <span class="font-grotesk text-xs text-on-surface-variant">⭐ ${p.rating} · ${p.reviews} reviews</span>
+          <span class="font-grotesk text-xs text-primary-fixed-dim">${Math.round((p.mrp-p.price)/p.mrp*100)}% off</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function applyFilters() {
+  let filtered = allProducts.filter(p => {
+    if (activeFilters.brands.length && !activeFilters.brands.includes(p.brand)) return false;
+    if (activeFilters.conditions.length && !activeFilters.conditions.includes(p.condition)) return false;
+    if (activeFilters.storage && p.storage !== activeFilters.storage) return false;
+    if (p.price > activeFilters.maxPrice) return false;
+    return true;
+  });
+  if (activeFilters.sort === 'price_asc') filtered.sort((a,b) => a.price - b.price);
+  else if (activeFilters.sort === 'price_desc') filtered.sort((a,b) => b.price - a.price);
+  else filtered.sort((a,b) => b.rating - a.rating);
+  renderProducts(filtered);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const data = await RefurbX.api.get('/products?category=laptop');
+  allProducts = data.products;
+  renderProducts(allProducts);
+
+  document.querySelectorAll('.brand-filter').forEach(cb => cb.addEventListener('change', () => {
+    activeFilters.brands = [...document.querySelectorAll('.brand-filter:checked')].map(c => c.value);
+    applyFilters();
+  }));
+  document.querySelectorAll('.cond-filter').forEach(cb => cb.addEventListener('change', () => {
+    activeFilters.conditions = [...document.querySelectorAll('.cond-filter:checked')].map(c => c.value);
+    applyFilters();
+  }));
+  document.querySelectorAll('.storage-filter').forEach(btn => btn.addEventListener('click', () => {
+    const v = btn.dataset.value;
+    if (activeFilters.storage === v) { activeFilters.storage = null; btn.classList.remove('active'); }
+    else { document.querySelectorAll('.storage-filter').forEach(b => b.classList.remove('active')); activeFilters.storage = v; btn.classList.add('active'); }
+    applyFilters();
+  }));
+  const priceRange = document.getElementById('price-range');
+  priceRange.addEventListener('input', () => {
+    activeFilters.maxPrice = parseInt(priceRange.value);
+    const pct = ((priceRange.value - 20000) / (150000 - 20000) * 100);
+    priceRange.style.setProperty('--val', pct + '%');
+    document.getElementById('price-label').textContent = '₹' + parseInt(priceRange.value).toLocaleString('en-IN');
+    applyFilters();
+  });
+  document.getElementById('sort-select').addEventListener('change', e => { activeFilters.sort = e.target.value; applyFilters(); });
+  document.getElementById('clear-filters').addEventListener('click', () => {
+    activeFilters = { brands: [], conditions: [], storage: null, maxPrice: 150000, sort: 'rating' };
+    document.querySelectorAll('.brand-filter,.cond-filter').forEach(c => c.checked = false);
+    document.querySelectorAll('.storage-filter').forEach(b => b.classList.remove('active'));
+    priceRange.value = 150000; document.getElementById('price-label').textContent = '₹1,50,000';
+    applyFilters();
+  });
+});
+</script>
+</body></html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Track Order — RefurbX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{'surface':'#121414','surface-container-lowest':'#0c0f0f','surface-container-low':'#1a1c1c','surface-container':'#1e2020','surface-container-high':'#282a2b','surface-container-highest':'#333535','on-surface':'#e2e2e2','on-surface-variant':'#b9cacb','outline':'#849495','outline-variant':'#3b494b','primary-fixed-dim':'#00dbe9','on-primary-fixed':'#002022','background':'#121414'},fontFamily:{'grotesk':['Space Grotesk','sans-serif'],'work':['Work Sans','sans-serif']}}}}</script>
+<link rel="stylesheet" href="/assets/base.css"/>
+<style>
+.pipeline-step{display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:10}
+.step-node{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.step-node.done{background:#00dbe9;color:#002022;box-shadow:0 0 20px rgba(0,219,233,.5)}
+.step-node.active{background:#1e2020;border:2px solid #00dbe9;color:#00dbe9;animation:pulseCyan 2s infinite}
+.step-node.pending{background:#1e2020;border:2px solid #3b494b;color:#849495}
+@keyframes pulseCyan{0%,100%{box-shadow:0 0 8px rgba(0,219,233,.3)}50%{box-shadow:0 0 20px rgba(0,219,233,.6)}}
+.timeline-item{border-left:2px solid #3b494b;padding-left:1.5rem;padding-bottom:2rem;position:relative}
+.timeline-item::before{content:'';position:absolute;left:-7px;top:0;width:12px;height:12px;border-radius:50%;background:#3b494b}
+.timeline-item.done{border-left-color:#00dbe9}
+.timeline-item.done::before{background:#00dbe9;box-shadow:0 0 8px rgba(0,219,233,.5)}
+</style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+<main class="max-w-7xl mx-auto px-6 lg:px-10 py-12">
+  <!-- Header with search -->
+  <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+    <div>
+      <span class="font-grotesk text-xs text-primary-fixed-dim tracking-[.3em] uppercase block mb-2">RefurbX Pipeline</span>
+      <h1 class="font-grotesk font-bold text-4xl text-on-surface">Track Your Order</h1>
+    </div>
+    <div class="flex gap-0 border border-outline-variant/50 hover:border-primary-fixed-dim/50 transition-colors">
+      <input id="order-id-input" type="text" placeholder="Enter Order ID (e.g. RX-90124)" class="bg-surface-container text-on-surface font-work text-sm px-4 py-3 w-64 focus:outline-none placeholder-on-surface-variant/50"/>
+      <button id="track-btn" class="btn-primary py-0 px-5 text-xs">Track</button>
+    </div>
+  </div>
+
+  <!-- Order Content -->
+  <div id="order-content">
+    <!-- Default: show the demo order -->
+    <div class="text-center py-10 text-on-surface-variant">
+      <span class="material-symbols-outlined text-4xl text-primary-fixed-dim block mb-3">local_shipping</span>
+      <p class="font-grotesk text-sm">Enter your Order ID above or <button class="text-primary-fixed-dim underline" onclick="loadOrder('RX-90124')">view demo order</button></p>
+    </div>
+  </div>
+</main>
+
+<div id="footer-placeholder"></div>
+<script src="/assets/shared.js"></script>
+<script src="/assets/app.js"></script>
+<script>
+injectShared('');
+
+const STAGES = [
+  { icon: 'check', label: 'Order Placed', desc: 'Your order has been confirmed' },
+  { icon: 'biotech', label: 'Inspection', desc: 'Surgical 40-point diagnostic check' },
+  { icon: 'build', label: 'Restoration', desc: 'OEM parts installed and calibrated' },
+  { icon: 'inventory_2', label: 'Packaging', desc: 'Sterilized anti-static packaging' },
+  { icon: 'local_shipping', label: 'Dispatched', desc: 'Out for delivery to your address' },
+];
+
+async function loadOrder(id) {
+  const container = document.getElementById('order-content');
+  container.innerHTML = `<div class="text-center py-10"><span class="material-symbols-outlined text-primary-fixed-dim animate-spin text-4xl">sync</span></div>`;
+  try {
+    const order = await RefurbX.api.get('/orders/' + id);
+    const stage = order.stage;
+    container.innerHTML = `
+      <div class="grid lg:grid-cols-12 gap-8">
+        <!-- Pipeline Status -->
+        <div class="lg:col-span-8 bg-surface-container-low border border-outline-variant/30 p-8 cyan-glow">
+          <div class="flex justify-between items-start mb-8">
+            <div>
+              <h2 class="font-grotesk font-semibold text-xl text-on-surface mb-1">Pipeline Status</h2>
+              <p class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest">Order ${order.id}</p>
+            </div>
+            <span class="chip text-xs flex items-center gap-1">${order.status}</span>
+          </div>
+          <!-- Pipeline Steps -->
+          <div class="relative">
+            <div class="absolute top-[22px] left-[22px] right-[22px] h-0.5 bg-surface-container-highest hidden md:block">
+              <div class="h-full bg-primary-fixed-dim transition-all duration-1000" style="width:${Math.min((stage-1)/4*100,100)}%"></div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between gap-6 md:gap-2">
+              ${STAGES.map((s, i) => {
+                const n = i + 1;
+                const cls = n < stage ? 'done' : n === stage ? 'active' : 'pending';
+                return `
+                <div class="pipeline-step flex-1">
+                  <div class="step-node ${cls}">
+                    <span class="material-symbols-outlined text-sm" ${n<stage?"style=\"font-variation-settings:'FILL' 1\"":""}>${n < stage ? 'check' : s.icon}</span>
+                  </div>
+                  <div class="font-grotesk text-xs font-semibold ${n<=stage?'text-primary-fixed-dim':'text-on-surface-variant'} mb-1">${s.label}</div>
+                  <div class="font-work text-xs text-on-surface-variant hidden md:block max-w-[100px]">${s.desc}</div>
+                </div>`;
+              }).join('')}
+            </div>
+          </div>
+          <!-- Timeline -->
+          <div class="mt-10">
+            <h3 class="font-grotesk font-semibold text-on-surface mb-6 text-sm uppercase tracking-widest">Activity Log</h3>
+            <div class="space-y-0">
+              ${STAGES.slice(0, stage).map((s, i) => `
+                <div class="timeline-item done">
+                  <div class="font-grotesk text-sm font-semibold text-on-surface mb-1">${s.label}</div>
+                  <div class="font-work text-xs text-on-surface-variant">${s.desc}</div>
+                  <div class="font-grotesk text-xs text-primary-fixed-dim mt-1">Completed</div>
+                </div>
+              `).join('')}
+              ${stage < 5 ? `<div class="timeline-item"><div class="font-grotesk text-sm text-on-surface-variant">Awaiting next stage...</div></div>` : ''}
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Info -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="bg-surface-container-low border border-outline-variant/30 p-6">
+            <h3 class="font-grotesk font-semibold text-on-surface mb-4 pb-3 border-b border-outline-variant/20">Delivery Details</h3>
+            <div class="space-y-3 font-work text-sm">
+              <div class="flex justify-between"><span class="text-on-surface-variant">Order ID</span><span class="text-primary-fixed-dim font-grotesk font-semibold">${order.id}</span></div>
+              <div class="flex justify-between"><span class="text-on-surface-variant">Product</span><span class="text-on-surface">${order.productName}</span></div>
+              <div class="flex justify-between"><span class="text-on-surface-variant">Status</span><span class="text-on-surface">${order.status}</span></div>
+              <div class="flex justify-between"><span class="text-on-surface-variant">Est. Delivery</span><span class="text-primary-fixed-dim font-grotesk font-semibold">${order.eta}</span></div>
+            </div>
+          </div>
+          <div class="bg-surface-container-low border border-outline-variant/30 p-6">
+            <h3 class="font-grotesk font-semibold text-on-surface mb-4">Need Help?</h3>
+            <a href="/support" class="btn-primary w-full justify-center text-xs py-3 block text-center mb-3">
+              <span class="material-symbols-outlined text-sm">support_agent</span> Contact Support
+            </a>
+            <a href="/account" class="btn-ghost w-full justify-center text-xs py-2 block text-center">View All Orders</a>
+          </div>
+        </div>
+      </div>
+    `;
+  } catch(e) {
+    container.innerHTML = `<div class="bg-surface-container-low border border-outline-variant/30 p-10 text-center">
+      <span class="material-symbols-outlined text-4xl text-on-surface-variant block mb-3">search_off</span>
+      <p class="font-grotesk text-on-surface">Order not found</p>
+      <p class="font-work text-sm text-on-surface-variant mt-2">Please check your Order ID and try again.</p>
+    </div>`;
+  }
+}
+
+document.getElementById('track-btn').addEventListener('click', () => {
+  const id = document.getElementById('order-id-input').value.trim().toUpperCase();
+  if (!id) { RefurbX.showToast('Please enter an Order ID', 'error'); return; }
+  loadOrder(id);
+});
+document.getElementById('order-id-input').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('track-btn').click(); });
+</script>
+</body></html>

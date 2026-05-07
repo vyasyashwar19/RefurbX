@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Account — RefurbX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{'surface':'#121414','surface-container-lowest':'#0c0f0f','surface-container-low':'#1a1c1c','surface-container':'#1e2020','surface-container-high':'#282a2b','surface-container-highest':'#333535','on-surface':'#e2e2e2','on-surface-variant':'#b9cacb','outline':'#849495','outline-variant':'#3b494b','primary-fixed-dim':'#00dbe9','on-primary-fixed':'#002022','background':'#121414'},fontFamily:{'grotesk':['Space Grotesk','sans-serif'],'work':['Work Sans','sans-serif']}}}}</script>
+<link rel="stylesheet" href="/assets/base.css"/>
+<style>
+.sidebar-link{display:flex;align-items:center;gap:.75rem;font-family:'Space Grotesk',sans-serif;font-size:.8125rem;font-weight:500;padding:.625rem .75rem;transition:all .2s;color:#b9cacb;letter-spacing:.03em;cursor:pointer;text-decoration:none}
+.sidebar-link:hover{color:#00dbe9;background:rgba(0,219,233,.05)}
+.sidebar-link.active{color:#00dbe9;background:rgba(0,219,233,.08);border-left:2px solid #00dbe9}
+.stat-card{background:#1a1c1c;border:1px solid #3b494b;padding:1.5rem;transition:all .3s}
+.stat-card:hover{border-color:rgba(0,219,233,.4)}
+.eco-bar{height:4px;background:#1e2020;border-radius:2px;overflow:hidden;margin-top:.5rem}
+.eco-fill{height:100%;background:linear-gradient(90deg,#00dbe9,#00f0ff);border-radius:2px;transition:width 1.5s ease}
+</style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+<div class="flex max-w-7xl mx-auto min-h-[calc(100vh-72px)]">
+  <!-- Sidebar -->
+  <aside class="hidden md:flex flex-col w-56 border-r border-outline-variant/20 py-8 px-4 shrink-0 gap-1">
+    <div class="px-3 mb-6">
+      <div class="w-12 h-12 rounded-full bg-primary-fixed-dim/10 border border-primary-fixed-dim/30 flex items-center justify-center mb-3">
+        <span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings:'FILL' 1">account_circle</span>
+      </div>
+      <div class="font-grotesk font-semibold text-on-surface text-sm">Arjun Mehta</div>
+      <div class="font-work text-xs text-on-surface-variant">arjun@example.com</div>
+    </div>
+    <a href="/account" class="sidebar-link active" data-tab="dashboard"><span class="material-symbols-outlined text-lg">dashboard</span>Dashboard</a>
+    <a href="#" class="sidebar-link" data-tab="orders" onclick="switchTab('orders');return false"><span class="material-symbols-outlined text-lg">receipt_long</span>My Orders</a>
+    <a href="#" class="sidebar-link" data-tab="tradeins" onclick="switchTab('tradeins');return false"><span class="material-symbols-outlined text-lg">swap_horiz</span>Trade-ins</a>
+    <a href="#" class="sidebar-link" data-tab="profile" onclick="switchTab('profile');return false"><span class="material-symbols-outlined text-lg">person</span>Profile</a>
+    <a href="#" class="sidebar-link" data-tab="eco" onclick="switchTab('eco');return false"><span class="material-symbols-outlined text-lg">eco</span>Eco Impact</a>
+    <a href="/support" class="sidebar-link"><span class="material-symbols-outlined text-lg">help_center</span>Support</a>
+    <div class="mt-auto px-3 pt-6 border-t border-outline-variant/20">
+      <div class="bg-primary-fixed-dim/5 border border-primary-fixed-dim/20 p-3 rounded">
+        <div class="font-grotesk text-xs text-primary-fixed-dim font-semibold mb-1">Eco Points</div>
+        <div class="font-grotesk font-bold text-xl text-on-surface">1,240</div>
+        <div class="eco-bar"><div class="eco-fill" style="width:62%"></div></div>
+        <div class="font-work text-xs text-on-surface-variant mt-1">260 pts to Silver tier</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 p-6 lg:p-8 overflow-auto">
+    <!-- Dashboard Tab -->
+    <div id="tab-dashboard" class="tab-pane">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+        <div>
+          <span class="font-grotesk text-xs text-primary-fixed-dim tracking-widest uppercase block mb-2">Mission Control</span>
+          <h1 class="font-grotesk font-bold text-4xl text-primary-fixed-dim">Welcome, Arjun.</h1>
+          <p class="font-work text-on-surface-variant mt-1">Precision renewed. Your dashboard at a glance.</p>
+        </div>
+        <div class="flex gap-3">
+          <div class="bg-surface-container-low border border-outline-variant/30 px-5 py-3 text-center">
+            <div class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-1">Wallet</div>
+            <div class="font-grotesk font-bold text-xl text-primary-fixed-dim">₹2,450</div>
+          </div>
+          <div class="bg-surface-container-low border border-outline-variant/30 px-5 py-3 text-center">
+            <div class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-1">Orders</div>
+            <div class="font-grotesk font-bold text-xl text-on-surface">3</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bento Grid -->
+      <div class="grid md:grid-cols-12 gap-5">
+        <!-- Active Order -->
+        <div class="md:col-span-8 bg-surface-container-low border border-outline-variant/30 p-6 cyan-glow group hover:border-primary-fixed-dim/40 transition-all">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <h2 class="font-grotesk font-semibold text-on-surface mb-1">Active Order</h2>
+              <p class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest">Order ID: #RX-90124</p>
+            </div>
+            <span class="chip">Out For Delivery</span>
+          </div>
+          <div class="flex flex-col md:flex-row gap-6 items-center">
+            <div class="w-28 h-28 bg-surface-container-highest border border-outline-variant/20 flex items-center justify-center shrink-0 overflow-hidden">
+              <span class="material-symbols-outlined text-4xl text-on-surface-variant group-hover:text-primary-fixed-dim transition-colors">smartphone</span>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-grotesk font-semibold text-xl text-primary-fixed-dim mb-1">iPhone 14 Pro Max</h3>
+              <p class="font-work text-sm text-on-surface-variant mb-4">Space Black · 256GB · Grade A+</p>
+              <!-- Mini pipeline -->
+              <div class="relative">
+                <div class="absolute top-[10px] left-[10px] right-[10px] h-0.5 bg-surface-container-highest">
+                  <div class="h-full bg-primary-fixed-dim" style="width:80%"></div>
+                </div>
+                <div class="flex justify-between">
+                  ${['Ordered','Inspected','Packed','Delivered'].map((l,i) => `
+                    <div class="flex flex-col items-center">
+                      <div class="w-5 h-5 rounded-full flex items-center justify-center z-10 relative ${i<3?'bg-primary-fixed-dim':'bg-surface-container-highest border-2 border-primary-fixed-dim'}">
+                        ${i<3?'<span class="material-symbols-outlined text-[10px] text-on-primary-fixed" style="font-variation-settings:\'FILL\' 1">check</span>':'<div class="w-1.5 h-1.5 bg-primary-fixed-dim rounded-full animate-pulse"></div>'}
+                      </div>
+                      <span class="font-grotesk text-[9px] text-on-surface-variant mt-1 uppercase">${l}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-5 border-t border-outline-variant/20 flex items-center justify-between">
+            <span class="font-work text-xs text-on-surface-variant">Expected: <span class="text-primary-fixed-dim font-grotesk font-semibold">Tomorrow, 10 AM – 2 PM</span></span>
+            <a href="/track?id=RX-90124" class="font-grotesk text-xs text-primary-fixed-dim hover:underline flex items-center gap-1">Track <span class="material-symbols-outlined text-xs">arrow_forward</span></a>
+          </div>
+        </div>
+
+        <!-- Stats Column -->
+        <div class="md:col-span-4 space-y-4">
+          <div class="stat-card">
+            <div class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-2">Eco Points</div>
+            <div class="font-grotesk font-bold text-3xl text-primary-fixed-dim">1,240</div>
+            <div class="eco-bar mt-2"><div class="eco-fill" style="width:62%"></div></div>
+            <div class="font-work text-xs text-on-surface-variant mt-2">262 pts to Silver tier</div>
+          </div>
+          <div class="stat-card">
+            <div class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-2">E-Waste Saved</div>
+            <div class="font-grotesk font-bold text-3xl text-primary-fixed-dim">4.2<span class="text-lg">kg</span></div>
+            <div class="font-work text-xs text-on-surface-variant mt-1">≈ 3 full device lifecycles</div>
+          </div>
+          <div class="stat-card">
+            <div class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-2">Total Saved</div>
+            <div class="font-grotesk font-bold text-3xl text-primary-fixed-dim">₹78,000</div>
+            <div class="font-work text-xs text-on-surface-variant mt-1">vs. buying new retail</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="md:col-span-12 grid md:grid-cols-3 gap-4">
+          <a href="/smartphones" class="bg-surface-container-low border border-outline-variant/30 hover:border-primary-fixed-dim/50 transition-all p-5 flex items-center gap-4 group">
+            <span class="material-symbols-outlined text-primary-fixed-dim text-2xl" style="font-variation-settings:'FILL' 1">smartphone</span>
+            <div><div class="font-grotesk text-sm font-semibold text-on-surface group-hover:text-primary-fixed-dim transition-colors">Shop Devices</div><div class="font-work text-xs text-on-surface-variant">Browse refurbished catalog</div></div>
+          </a>
+          <a href="/sell" class="bg-surface-container-low border border-outline-variant/30 hover:border-primary-fixed-dim/50 transition-all p-5 flex items-center gap-4 group">
+            <span class="material-symbols-outlined text-primary-fixed-dim text-2xl" style="font-variation-settings:'FILL' 1">sell</span>
+            <div><div class="font-grotesk text-sm font-semibold text-on-surface group-hover:text-primary-fixed-dim transition-colors">Sell Device</div><div class="font-work text-xs text-on-surface-variant">Get instant trade-in quote</div></div>
+          </a>
+          <a href="/support" class="bg-surface-container-low border border-outline-variant/30 hover:border-primary-fixed-dim/50 transition-all p-5 flex items-center gap-4 group">
+            <span class="material-symbols-outlined text-primary-fixed-dim text-2xl" style="font-variation-settings:'FILL' 1">support_agent</span>
+            <div><div class="font-grotesk text-sm font-semibold text-on-surface group-hover:text-primary-fixed-dim transition-colors">Get Support</div><div class="font-work text-xs text-on-surface-variant">Talk to a technician</div></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="/assets/shared.js"></script>
+<script src="/assets/app.js"></script>
+<script>
+injectShared('');
+function switchTab(tab) {
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  document.querySelector(`[data-tab="${tab}"]`)?.classList.add('active');
+}
+</script>
+</body></html>

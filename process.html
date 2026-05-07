@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Our Process — RefurbX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{'surface':'#121414','surface-container-lowest':'#0c0f0f','surface-container-low':'#1a1c1c','surface-container':'#1e2020','surface-container-high':'#282a2b','surface-container-highest':'#333535','on-surface':'#e2e2e2','on-surface-variant':'#b9cacb','outline':'#849495','outline-variant':'#3b494b','primary-fixed-dim':'#00dbe9','on-primary-fixed':'#002022','background':'#121414'},fontFamily:{'grotesk':['Space Grotesk','sans-serif'],'work':['Work Sans','sans-serif']}}}}</script>
+<link rel="stylesheet" href="/assets/base.css"/>
+<style>
+.stage-hero{min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;padding:2.5rem;position:relative;overflow:hidden;transition:all .4s ease;cursor:pointer}
+.stage-hero:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,219,233,.12)}
+.stage-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.3) 0%,rgba(12,15,15,.9) 100%)}
+.stage-num{position:absolute;top:1.5rem;right:1.5rem;font-family:'Space Grotesk',sans-serif;font-size:5rem;font-weight:700;color:rgba(0,219,233,.08);line-height:1}
+.check-item{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 0;border-bottom:1px solid rgba(59,73,75,.3)}
+.check-item:last-child{border-bottom:none}
+@keyframes scanLine{0%{top:-100%}100%{top:200%}}
+.scan{position:relative;overflow:hidden}
+.scan::after{content:'';position:absolute;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,219,233,.8),transparent);animation:scanLine 4s linear infinite;top:0}
+.timeline-col{position:relative;padding-left:2.5rem}
+.timeline-col::before{content:'';position:absolute;left:.75rem;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(0,219,233,.6),rgba(0,219,233,.1))}
+.timeline-dot{position:absolute;left:.4rem;width:10px;height:10px;border-radius:50%;background:#00dbe9;top:.3rem;box-shadow:0 0 10px rgba(0,219,233,.8)}
+.cert-badge{border:1px solid rgba(0,219,233,.3);background:rgba(0,219,233,.04);padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1rem;transition:all .3s}
+.cert-badge:hover{border-color:rgba(0,219,233,.7);background:rgba(0,219,233,.08)}
+</style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<!-- HERO -->
+<section class="relative py-24 overflow-hidden" style="background:linear-gradient(135deg,#0c1a1a 0%,#121414 50%,#0c0f0f 100%)">
+  <div class="absolute inset-0 opacity-20" style="background-image:linear-gradient(rgba(0,219,233,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,219,233,.05) 1px,transparent 1px);background-size:60px 60px"></div>
+  <div class="absolute right-0 top-0 w-1/3 h-full opacity-10" style="background:radial-gradient(ellipse at right,rgba(0,219,233,.5),transparent 70%)"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 text-center">
+    <span class="font-grotesk text-xs text-primary-fixed-dim tracking-[.35em] uppercase block mb-5">Precision Engineering</span>
+    <h1 class="font-grotesk font-bold text-5xl lg:text-7xl text-on-surface mb-6 leading-tight">
+      The <span class="text-primary-fixed-dim">RefurbX</span><br/>Process
+    </h1>
+    <p class="font-work text-lg text-on-surface-variant max-w-2xl mx-auto mb-10 leading-relaxed">Every device undergoes a systematic 4-stage surgical renewal pipeline — from teardown diagnostics to sterilized packaging — verified by our master technicians and automated precision tools.</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <span class="chip flex items-center gap-1"><span class="material-symbols-outlined text-xs">biotech</span> 40+ Diagnostic Points</span>
+      <span class="chip flex items-center gap-1"><span class="material-symbols-outlined text-xs">build</span> OEM Certified Parts</span>
+      <span class="chip flex items-center gap-1"><span class="material-symbols-outlined text-xs">eco</span> Zero E-Waste Policy</span>
+      <span class="chip flex items-center gap-1"><span class="material-symbols-outlined text-xs">timer</span> 72-Hour Turnaround</span>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE CARDS -->
+<section class="py-24 max-w-7xl mx-auto px-6 lg:px-10">
+  <div class="mb-16">
+    <span class="font-grotesk text-xs text-primary-fixed-dim tracking-[.3em] uppercase block mb-3">Four Pillars</span>
+    <h2 class="font-grotesk font-bold text-4xl text-on-surface border-l-4 border-primary-fixed-dim pl-6">Renewal Pipeline</h2>
+  </div>
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- Stage 1 -->
+    <div class="stage-hero scan bg-surface-container-low border border-outline-variant/30 hover:border-primary-fixed-dim/50">
+      <div class="stage-overlay"></div>
+      <div class="stage-num">01</div>
+      <div class="relative z-10">
+        <div class="w-12 h-12 bg-primary-fixed-dim/15 border border-primary-fixed-dim/40 flex items-center justify-center mb-5">
+          <span class="material-symbols-outlined text-primary-fixed-dim text-2xl" style="font-variation-settings:'FILL' 1">search_check</span>
+        </div>
+        <h3 class="font-grotesk font-bold text-2xl text-on-surface mb-3">Stage 1 — Deep Inspection</h3>
+        <p class="font-work text-on-surface-variant mb-4 leading-relaxed">Complete surgical disassembly under anti-static protocols. Every component catalogued, analyzed and stress-tested using proprietary diagnostic firmware.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip">X-Ray Imaging</span>
+          <span class="chip">Thermal Scan</span>
+          <span class="chip">Logic Board Analysis</span>
+        </div>
+      </div>
+    </div>
+    <!-- Stage 2 -->
+    <div class="stage-hero bg-surface-container-low border border-outline-variant/30 hover:border-primary-fixed-dim/50">
+      <div class="stage-overlay"></div>
+      <div class="stage-num">02</div>
+      <div class="relative z-10">
+        <div class="w-12 h-12 bg-primary-fixed-dim/15 border border-primary-fixed-dim/40 flex items-center justify-center mb-5">
+          <span class="material-symbols-outlined text-primary-fixed-dim text-2xl" style="font-variation-settings:'FILL' 1">build_circle</span>
+        </div>
+        <h3 class="font-grotesk font-bold text-2xl text-on-surface mb-3">Stage 2 — Precision Restoration</h3>
+        <p class="font-work text-on-surface-variant mb-4 leading-relaxed">Defective components replaced with OEM-certified parts sourced directly from manufacturer supply chains. Zero grey-market components, ever.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip">OEM Parts Only</span>
+          <span class="chip">Battery Replacement</span>
+          <span class="chip">Display Calibration</span>
+        </div>
+      </div>
+    </div>
+    <!-- Stage 3 -->
+    <div class="stage-hero bg-surface-container-low border border-outline-variant/30 hover:border-primary-fixed-dim/50">
+      <div class="stage-overlay"></div>
+      <div class="stage-num">03</div>
+      <div class="relative z-10">
+        <div class="w-12 h-12 bg-primary-fixed-dim/15 border border-primary-fixed-dim/40 flex items-center justify-center mb-5">
+          <span class="material-symbols-outlined text-primary-fixed-dim text-2xl" style="font-variation-settings:'FILL' 1">fact_check</span>
+        </div>
+        <h3 class="font-grotesk font-bold text-2xl text-on-surface mb-3">Stage 3 — QC & Certification</h3>
+        <p class="font-work text-on-surface-variant mb-4 leading-relaxed">Independent Quality Control engineers run a full 40+ point audit. Device must pass every single checkpoint — there are no partial passes at RefurbX.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip">40-Point Audit</span>
+          <span class="chip">48-Hr Burn-in Test</span>
+          <span class="chip">Grade Assignment</span>
+        </div>
+      </div>
+    </div>
+    <!-- Stage 4 -->
+    <div class="stage-hero bg-surface-container-low border border-outline-variant/30 hover:border-primary-fixed-dim/50">
+      <div class="stage-overlay"></div>
+      <div class="stage-num">04</div>
+      <div class="relative z-10">
+        <div class="w-12 h-12 bg-primary-fixed-dim/15 border border-primary-fixed-dim/40 flex items-center justify-center mb-5">
+          <span class="material-symbols-outlined text-primary-fixed-dim text-2xl" style="font-variation-settings:'FILL' 1">inventory_2</span>
+        </div>
+        <h3 class="font-grotesk font-bold text-2xl text-on-surface mb-3">Stage 4 — Certified Deployment</h3>
+        <p class="font-work text-on-surface-variant mb-4 leading-relaxed">Factory-reset to secure erase standard. Packaged in anti-static, eco-certified boxes with a signed Condition Report and warranty certificate inside.</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip">Secure Data Wipe</span>
+          <span class="chip">Eco Packaging</span>
+          <span class="chip">Warranty Card</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 40-POINT CHECKLIST -->
+<section class="py-24 bg-surface-container-lowest">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex flex-col lg:flex-row gap-16">
+      <div class="lg:w-80 shrink-0">
+        <span class="font-grotesk text-xs text-primary-fixed-dim tracking-[.3em] uppercase block mb-3">The Standard</span>
+        <h2 class="font-grotesk font-bold text-4xl text-on-surface mb-6">40-Point Checklist</h2>
+        <p class="font-work text-on-surface-variant leading-relaxed mb-6">Every inspection point is binary — PASS or FAIL. A device that fails any single point does not reach our marketplace. No exceptions.</p>
+        <div class="bg-surface-container-low border border-primary-fixed-dim/30 p-5 cyan-glow">
+          <div class="font-grotesk text-3xl font-bold text-primary-fixed-dim mb-1">100%</div>
+          <div class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest">Pass Rate Required</div>
+          <div class="font-work text-sm text-on-surface-variant mt-2">Devices that fail undergo repair or are responsibly recycled.</div>
+        </div>
+      </div>
+      <div class="flex-1 grid md:grid-cols-2 gap-x-10">
+        <div>
+          <h4 class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-4 pb-2 border-b border-outline-variant/20">Hardware Systems</h4>
+          <div class="timeline-col">
+            ${[
+              ['Display','Zero dead pixels, no burn-in, factory colour calibration'],
+              ['Touch Screen','Full multitouch response across entire panel'],
+              ['Battery','Minimum 90% rated capacity verified under load'],
+              ['Charging Circuit','USB-C/Lightning/MagSafe — full current and data sync'],
+              ['Logic Board','Thermal scan, capacitor check, solder joint integrity'],
+              ['Rear Camera','AF speed, OIS, flash, 4K/slow-mo recording tests'],
+              ['Front Camera','Face ID/Selfie resolution, autofocus and flash'],
+              ['Speaker','Full-range frequency test and distortion analysis'],
+              ['Microphone','Sensitivity & noise-floor benchmarked vs. factory spec'],
+              ['Vibration Motor','Haptic strength and frequency calibration'],
+            ].map(([t,d]) => `
+              <div class="check-item">
+                <div class="timeline-dot"></div>
+                <div class="pl-1">
+                  <div class="font-grotesk text-sm font-semibold text-on-surface">${t}</div>
+                  <div class="font-work text-xs text-on-surface-variant mt-0.5">${d}</div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <h4 class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-4 pb-2 border-b border-outline-variant/20">Software & Connectivity</h4>
+          <div class="timeline-col">
+            ${[
+              ['Face ID / Biometrics','Full sensor enrollment and recognition speed test'],
+              ['5G / LTE Radios','All carrier bands verified, signal strength benchmarked'],
+              ['Wi-Fi 6 / 6E','Throughput test at 2.4GHz, 5GHz, and 6GHz bands'],
+              ['Bluetooth 5.x','Pairing, range and latency measurement'],
+              ['NFC / Contactless','Read/write verification for payments and pairing'],
+              ['GPS / Location','Lock speed and accuracy tested outdoors'],
+              ['Ambient Sensors','Proximity, accelerometer, gyroscope calibration'],
+              ['Secure Enclave','Factory data wipe to DoD 5220.22-M standard'],
+              ['OS & Software','Clean factory firmware install and OTA update check'],
+              ['Cosmetic Grade','10x magnification external inspection and grade assignment'],
+            ].map(([t,d]) => `
+              <div class="check-item">
+                <div class="timeline-dot"></div>
+                <div class="pl-1">
+                  <div class="font-grotesk text-sm font-semibold text-on-surface">${t}</div>
+                  <div class="font-work text-xs text-on-surface-variant mt-0.5">${d}</div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="py-24 max-w-7xl mx-auto px-6 lg:px-10">
+  <div class="text-center mb-14">
+    <span class="font-grotesk text-xs text-primary-fixed-dim tracking-[.3em] uppercase block mb-3">Verified By</span>
+    <h2 class="font-grotesk font-bold text-4xl text-on-surface">Certifications & Standards</h2>
+  </div>
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="cert-badge">
+      <span class="material-symbols-outlined text-primary-fixed-dim text-3xl shrink-0" style="font-variation-settings:'FILL' 1">verified</span>
+      <div><div class="font-grotesk font-semibold text-on-surface text-sm">ISO 9001:2015</div><div class="font-work text-xs text-on-surface-variant">Quality Management</div></div>
+    </div>
+    <div class="cert-badge">
+      <span class="material-symbols-outlined text-primary-fixed-dim text-3xl shrink-0" style="font-variation-settings:'FILL' 1">eco</span>
+      <div><div class="font-grotesk font-semibold text-on-surface text-sm">E-Waste Certified</div><div class="font-work text-xs text-on-surface-variant">Ministry of Environment</div></div>
+    </div>
+    <div class="cert-badge">
+      <span class="material-symbols-outlined text-primary-fixed-dim text-3xl shrink-0" style="font-variation-settings:'FILL' 1">security</span>
+      <div><div class="font-grotesk font-semibold text-on-surface text-sm">Data Security</div><div class="font-work text-xs text-on-surface-variant">DoD 5220.22-M Wipe</div></div>
+    </div>
+    <div class="cert-badge">
+      <span class="material-symbols-outlined text-primary-fixed-dim text-3xl shrink-0" style="font-variation-settings:'FILL' 1">workspace_premium</span>
+      <div><div class="font-grotesk font-semibold text-on-surface text-sm">OEM Partnerships</div><div class="font-work text-xs text-on-surface-variant">Certified Parts Supply Chain</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-16 max-w-7xl mx-auto px-6 lg:px-10">
+  <div class="bg-surface-container-low border border-outline-variant/30 hover:border-primary-fixed-dim/40 transition-all p-10 md:p-16 text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30" style="background:radial-gradient(ellipse at center,rgba(0,219,233,.12) 0%,transparent 70%)"></div>
+    <div class="relative z-10">
+      <h2 class="font-grotesk font-bold text-4xl text-on-surface mb-4">Ready to experience<br/><span class="text-primary-fixed-dim">Precision Renewed?</span></h2>
+      <p class="font-work text-on-surface-variant mb-8 max-w-md mx-auto">Browse our catalog of certified devices. Every unit carries the full weight of the RefurbX process behind it.</p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="/smartphones" class="btn-primary text-sm px-10">Shop Smartphones</a>
+        <a href="/laptops" class="btn-ghost text-sm px-10">Shop Laptops</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="/assets/shared.js"></script>
+<script src="/assets/app.js"></script>
+<script>injectShared('/process');</script>
+</body></html>

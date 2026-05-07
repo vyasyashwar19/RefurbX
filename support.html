@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Support Center — RefurbX</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{'surface':'#121414','surface-container-lowest':'#0c0f0f','surface-container-low':'#1a1c1c','surface-container':'#1e2020','surface-container-high':'#282a2b','surface-container-highest':'#333535','on-surface':'#e2e2e2','on-surface-variant':'#b9cacb','outline':'#849495','outline-variant':'#3b494b','primary-fixed-dim':'#00dbe9','on-primary-fixed':'#002022','background':'#121414'},fontFamily:{'grotesk':['Space Grotesk','sans-serif'],'work':['Work Sans','sans-serif']}}}}</script>
+<link rel="stylesheet" href="/assets/base.css"/>
+<style>
+.faq-item{border:1px solid #3b494b;overflow:hidden;transition:border-color .2s}
+.faq-item:hover{border-color:rgba(0,219,233,.4)}
+.faq-item.open{border-color:rgba(0,219,233,.5)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:1.125rem 1.5rem;cursor:pointer;gap:1rem}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;padding:0 1.5rem}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:1.25rem}
+.faq-icon{transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-icon{transform:rotate(45deg);color:#00dbe9}
+.contact-card{border:1px solid #3b494b;padding:1.75rem;transition:all .3s;cursor:pointer}
+.contact-card:hover{border-color:rgba(0,219,233,.5);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,219,233,.08)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#00dbe9;animation:pulse .8s ease infinite alternate}
+@keyframes pulse{from{opacity:.4;box-shadow:0 0 4px rgba(0,219,233,.3)}to{opacity:1;box-shadow:0 0 10px rgba(0,219,233,.7)}}
+.cat-pill{border:1px solid #3b494b;padding:.5rem 1.25rem;font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:all .2s;color:#b9cacb}
+.cat-pill:hover,.cat-pill.active{border-color:#00dbe9;color:#00dbe9;background:rgba(0,219,233,.06)}
+.input-field{width:100%;background:#1e2020;border:none;border-bottom:1px solid #3b494b;color:#e2e2e2;font-family:'Work Sans',sans-serif;font-size:.875rem;padding:.625rem 0;transition:border-color .2s}
+.input-field:focus{border-bottom-color:#00dbe9;outline:none}
+</style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<!-- Hero -->
+<section class="relative py-20 overflow-hidden" style="background:linear-gradient(135deg,#0c1a1a 0%,#121414 60%,#0c0f0f 100%)">
+  <div class="absolute inset-0 opacity-20" style="background-image:linear-gradient(rgba(0,219,233,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,219,233,.04) 1px,transparent 1px);background-size:60px 60px"></div>
+  <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+    <span class="font-grotesk text-xs text-primary-fixed-dim tracking-[.3em] uppercase block mb-4">We're Here 24/7</span>
+    <h1 class="font-grotesk font-bold text-5xl text-on-surface mb-5">Support <span class="text-primary-fixed-dim">Center</span></h1>
+    <p class="font-work text-lg text-on-surface-variant mb-8 max-w-xl mx-auto">How can we help you today? Search our knowledge base or connect directly with a RefurbX specialist.</p>
+    <!-- Search -->
+    <div class="flex gap-0 max-w-lg mx-auto border border-outline-variant/50 hover:border-primary-fixed-dim/50 transition-colors bg-surface-container">
+      <span class="material-symbols-outlined text-on-surface-variant self-center ml-4">search</span>
+      <input id="faq-search" type="text" class="flex-1 bg-transparent text-on-surface font-work text-sm px-4 py-4 focus:outline-none placeholder-on-surface-variant/50" placeholder="Search e.g. 'warranty claim', 'return policy'"/>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Cards -->
+<section class="py-16 max-w-7xl mx-auto px-6 lg:px-10">
+  <div class="grid md:grid-cols-3 gap-5 mb-20">
+    <div class="contact-card bg-surface-container-low">
+      <div class="flex items-start justify-between mb-5">
+        <div class="w-12 h-12 bg-primary-fixed-dim/10 border border-primary-fixed-dim/30 flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings:'FILL' 1">chat</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="status-dot"></div>
+          <span class="font-grotesk text-xs text-primary-fixed-dim uppercase tracking-wide">Online</span>
+        </div>
+      </div>
+      <h3 class="font-grotesk font-semibold text-on-surface mb-2">Live Chat</h3>
+      <p class="font-work text-sm text-on-surface-variant mb-4">Connect with a specialist instantly. Average response: under 2 minutes.</p>
+      <button onclick="RefurbX.showToast('Chat window opening...', 'success')" class="btn-primary text-xs py-2.5 px-6">Start Chat</button>
+    </div>
+    <div class="contact-card bg-surface-container-low">
+      <div class="flex items-start justify-between mb-5">
+        <div class="w-12 h-12 bg-primary-fixed-dim/10 border border-primary-fixed-dim/30 flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings:'FILL' 1">call</span>
+        </div>
+        <span class="font-grotesk text-xs text-on-surface-variant uppercase tracking-wide">9AM – 9PM</span>
+      </div>
+      <h3 class="font-grotesk font-semibold text-on-surface mb-2">Phone Support</h3>
+      <p class="font-work text-sm text-on-surface-variant mb-4">Talk to a certified technician. Mon–Sat, 9 AM to 9 PM IST.</p>
+      <a href="tel:+918001234567" class="btn-ghost text-xs py-2.5 px-6 inline-flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">call</span> 1800-123-4567
+      </a>
+    </div>
+    <div class="contact-card bg-surface-container-low">
+      <div class="flex items-start justify-between mb-5">
+        <div class="w-12 h-12 bg-primary-fixed-dim/10 border border-primary-fixed-dim/30 flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings:'FILL' 1">mail</span>
+        </div>
+        <span class="font-grotesk text-xs text-on-surface-variant uppercase tracking-wide">24-Hr Reply</span>
+      </div>
+      <h3 class="font-grotesk font-semibold text-on-surface mb-2">Email Support</h3>
+      <p class="font-work text-sm text-on-surface-variant mb-4">Send us a detailed message. We reply within 24 hours, guaranteed.</p>
+      <a href="mailto:support@refurbx.in" class="btn-ghost text-xs py-2.5 px-6 inline-flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">mail</span> Email Us
+      </a>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="flex flex-col lg:flex-row gap-12">
+    <!-- Categories -->
+    <div class="lg:w-48 shrink-0">
+      <h3 class="font-grotesk text-xs text-on-surface-variant uppercase tracking-widest mb-4">Categories</h3>
+      <div class="flex flex-row lg:flex-col flex-wrap gap-2">
+        <button class="cat-pill active" data-cat="all">All Topics</button>
+        <button class="cat-pill" data-cat="orders">Orders</button>
+        <button class="cat-pill" data-cat="warranty">Warranty</button>
+        <button class="cat-pill" data-cat="returns">Returns</button>
+        <button class="cat-pill" data-cat="sell">Sell</button>
+        <button class="cat-pill" data-cat="shipping">Shipping</button>
+      </div>
+    </div>
+
+    <!-- FAQ List -->
+    <div class="flex-1">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="font-grotesk font-semibold text-xl text-on-surface">Frequently Asked Questions</h2>
+        <span class="font-grotesk text-xs text-on-surface-variant" id="faq-count">Showing all</span>
+      </div>
+      <div id="faq-list" class="space-y-3">
+        <!-- JS rendered -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form -->
+<section class="py-24 bg-surface-container-lowest">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <h2 class="font-grotesk font-bold text-4xl text-on-surface mb-3">Send a Ticket</h2>
+      <p class="font-work text-on-surface-variant">Couldn't find an answer? Our team responds within 24 hours.</p>
+    </div>
+    <div class="bg-surface-container-low border border-outline-variant/30 p-8 cyan-glow">
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div><label class="font-grotesk text-xs text-on-surface-variant block mb-2">Full Name</label><input type="text" class="input-field" placeholder="Arjun Mehta"/></div>
+        <div><label class="font-grotesk text-xs text-on-surface-variant block mb-2">Email</label><input type="email" class="input-field" placeholder="arjun@example.com"/></div>
+        <div><label class="font-grotesk text-xs text-on-surface-variant block mb-2">Order ID (optional)</label><input type="text" class="input-field" placeholder="RX-XXXXX"/></div>
+        <div><label class="font-grotesk text-xs text-on-surface-variant block mb-2">Category</label>
+          <select class="input-field bg-surface-container">
+            <option>Order Issue</option><option>Warranty Claim</option><option>Return Request</option>
+            <option>Sell / Trade-in</option><option>Payment Issue</option><option>Other</option>
+          </select>
+        </div>
+        <div class="md:col-span-2"><label class="font-grotesk text-xs text-on-surface-variant block mb-2">Message</label>
+          <textarea class="input-field resize-none" rows="5" placeholder="Describe your issue in detail..."></textarea>
+        </div>
+      </div>
+      <button class="btn-primary text-sm px-10" onclick="submitTicket()">
+        <span class="material-symbols-outlined text-sm">send</span> Submit Ticket
+      </button>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="/assets/shared.js"></script>
+<script src="/assets/app.js"></script>
+<script>
+injectShared('/support');
+
+const FAQS = [
+  { cat: 'warranty', q: 'What does the 12-month warranty cover?', a: 'All RefurbX devices carry a 12-month warranty covering manufacturing defects, component failures (display, battery, cameras, logic board), and any battery health degradation below 80%. Physical damage and water damage are not covered.' },
+  { cat: 'returns', q: 'How do I return a device within 7 days?', a: 'Log into your account, go to My Orders, and click "Initiate Return" on the relevant order. We provide a prepaid return shipping label. Once received and inspected, the full refund is processed within 3–5 business days.' },
+  { cat: 'orders', q: 'How long does delivery take?', a: 'Orders are dispatched within 24 hours of placement. Standard delivery takes 3–5 business days across India. Express next-day delivery is available for metro cities at checkout.' },
+  { cat: 'sell', q: 'How accurate is the instant quote?', a: 'Our AI-powered quote is typically within 2–5% of the final inspection price. The quote is valid for 7 days. Final payment is made within 24 hours of physical inspection.' },
+  { cat: 'warranty', q: 'How do I make a warranty claim?', a: 'Contact our support via live chat or email with your Order ID and a description of the issue. Our team will arrange free doorstep pickup within 24 hours and a replacement or full repair within 7 business days.' },
+  { cat: 'shipping', q: 'Is my sold device insured during shipping?', a: 'Yes. All devices shipped to RefurbX under the BuyBack program are fully insured up to ₹1,50,000 using our prepaid shipping labels. We use only DHL Express and Blue Dart for device collection.' },
+  { cat: 'orders', q: 'Can I change or cancel my order?', a: 'Orders can be cancelled within 2 hours of placement for a full refund. After that, please use our 7-day return policy once you receive the device.' },
+  { cat: 'returns', q: 'Do you offer exchanges instead of refunds?', a: 'Yes. You can exchange for any device of equal or greater value within 7 days. The price difference (if applicable) is settled via the original payment method or RefurbX wallet.' },
+  { cat: 'sell', q: 'How quickly do I get paid after selling?', a: 'Payment is processed within 24 hours of inspection completion. You will receive an SMS and email confirmation. Funds arrive in your bank account via NEFT within the same business day.' },
+  { cat: 'orders', q: 'What payment methods do you accept?', a: 'We accept UPI (GPay, PhonePe, Paytm), Credit/Debit Cards (Visa, Mastercard, RuPay), Net Banking, and No-Cost EMI through leading banks. All transactions are PCI-DSS compliant.' },
+];
+
+let activeCat = 'all', searchQ = '';
+
+function renderFAQs() {
+  const list = FAQS.filter(f => {
+    const matchCat = activeCat === 'all' || f.cat === activeCat;
+    const matchQ = !searchQ || f.q.toLowerCase().includes(searchQ) || f.a.toLowerCase().includes(searchQ);
+    return matchCat && matchQ;
+  });
+  document.getElementById('faq-count').textContent = `${list.length} result${list.length !== 1 ? 's' : ''}`;
+  document.getElementById('faq-list').innerHTML = list.length ? list.map((f, i) => `
+    <div class="faq-item" id="faq-${i}">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        <span class="font-grotesk text-sm font-semibold text-on-surface pr-4">${f.q}</span>
+        <span class="material-symbols-outlined faq-icon text-on-surface-variant text-lg">add</span>
+      </div>
+      <div class="faq-a font-work text-sm text-on-surface-variant leading-relaxed">${f.a}</div>
+    </div>
+  `).join('') : `<div class="text-center py-12 text-on-surface-variant"><span class="material-symbols-outlined text-4xl block mb-3">search_off</span><p class="font-grotesk text-sm">No results found. <a href="#" class="text-primary-fixed-dim" onclick="document.getElementById('faq-search').value='';searchQ='';renderFAQs()">Clear search</a></p></div>`;
+}
+
+function toggleFAQ(i) {
+  const el = document.getElementById('faq-' + i);
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+document.querySelectorAll('.cat-pill').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeCat = btn.dataset.cat;
+  renderFAQs();
+}));
+
+let faqTimeout;
+document.getElementById('faq-search').addEventListener('input', e => {
+  clearTimeout(faqTimeout);
+  faqTimeout = setTimeout(() => { searchQ = e.target.value.toLowerCase().trim(); renderFAQs(); }, 200);
+});
+
+function submitTicket() {
+  RefurbX.showToast('Ticket submitted! We will reply within 24 hours.', 'success');
+}
+
+renderFAQs();
+</script>
+</body></html>
