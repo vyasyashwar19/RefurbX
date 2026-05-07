@@ -18,9 +18,20 @@ const pgSession = require('connect-pg-simple')(session);
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: 'postgresql://refurbx_db_user:21THSAtKbLBdyWDqQu3OIRu1TETmHhxE@dpg-d7u7eu5ckfvc73en9elg-a.singapore-postgres.render.com/refurbx_db',
   ssl: { rejectUnauthorized: false }
 });
+
+pool.query(`
+  CREATE TABLE IF NOT EXISTS "session" (
+    "sid" varchar NOT NULL,
+    "sess" json NOT NULL,
+    "expire" timestamp(6) NOT NULL,
+    PRIMARY KEY ("sid")
+  )
+`).then(() => pool.query('CREATE INDEX IF NOT EXISTS session_expire_idx ON "session" ("expire")'
+)).then(() => console.log('Session table ready!')
+).catch(err => console.error('Table error:', err));
 
 app.use(session({
   store: new pgSession({
