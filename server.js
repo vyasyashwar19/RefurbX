@@ -18,7 +18,7 @@ const pgSession = require('connect-pg-simple')(session);
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: 'postgresql://refurbx_db_user:21THSAtKbLBdyWDqQu3OIRu1TETmHhxE@dpg-d7u7eu5ckfvc73en9elg-a.singapore-postgres.render.com/refurbx_db',
+  connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
 
